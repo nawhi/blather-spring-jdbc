@@ -7,10 +7,16 @@ import java.util.stream.Stream;
 public class User {
 
     private final String name;
-    private final Set<User> usersFollowing = new HashSet<>();
+    private final Set<User> usersFollowing;
 
     public User(String name) {
         this.name = name;
+        usersFollowing = new HashSet<>();
+    }
+
+    public User(String name, Set<User> usersFollowing){
+        this.name = name;
+        this.usersFollowing = usersFollowing;
     }
 
     public String name() {

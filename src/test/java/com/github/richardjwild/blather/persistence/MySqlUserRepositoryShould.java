@@ -7,22 +7,20 @@ import org.junit.Test;
 
 import java.util.Optional;
 
-
-
 import static org.fest.assertions.Assertions.assertThat;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 public class MySqlUserRepositoryShould {
 
     private UserRepository userRepository;
     private UserDao userDao;
+    private FollowersDao followersDao;
 
     @Before
     public void setUp() {
         userDao = mock(UserDao.class);
-        userRepository = new MySqlUserRepository(userDao);
+        followersDao = mock(FollowersDao.class);
+        userRepository = new MySqlUserRepository(userDao, followersDao);
     }
 
     @Test
@@ -36,9 +34,12 @@ public class MySqlUserRepositoryShould {
     public void tell_dao_to_save_user() {
         String userName = "will_be_found";
         User expectedUser = new User(userName);
+
+        expectedUser.follow(new User(""));
         userRepository.save(expectedUser);
 
         verify(userDao).saveUser(expectedUser.name());
+     //   verify(followersDao).saveFollowees(expectedUser.name(),expectedUser.followees());
     }
 
     @Test
@@ -51,4 +52,6 @@ public class MySqlUserRepositoryShould {
 
         verify(userDao).findUser(expectedUser.name());
     }
+
+
 }

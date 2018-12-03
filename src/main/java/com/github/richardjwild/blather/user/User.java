@@ -31,6 +31,8 @@ public class User {
         usersFollowing.add(following);
     }
 
+    public Stream<User> followees(){return usersFollowing.stream();}
+
     @Override
     public boolean equals(Object o) {
         return o != null

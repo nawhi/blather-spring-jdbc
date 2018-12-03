@@ -12,6 +12,7 @@ import java.util.Optional;
 import static org.fest.assertions.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 public class MySqlUserRepositoryShould {
 
@@ -32,11 +33,22 @@ public class MySqlUserRepositoryShould {
     }
 
     @Test
-    public void return_stored_user_when_user_is_found() {
+    public void tell_dao_to_save_user() {
         String userName = "will_be_found";
         User expectedUser = new User(userName);
         userRepository.save(expectedUser);
 
         verify(userDao).saveUser(expectedUser.name());
+    }
+
+    @Test
+    public void retrieve_user_when_it_exists() {
+        String userName = "will_be_found";
+        User expectedUser = new User(userName);
+        when(userDao.findUser(userName)).thenReturn(expectedUser);
+
+        userRepository.find(expectedUser.name());
+
+        verify(userDao).findUser(expectedUser.name());
     }
 }

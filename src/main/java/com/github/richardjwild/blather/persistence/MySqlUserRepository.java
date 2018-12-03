@@ -15,7 +15,7 @@ public class MySqlUserRepository implements UserRepository {
 
     @Override
     public Optional<User> find(String name) {
-        return Optional.empty();
+        return Optional.ofNullable(userDao.findUser(name));
     }
 
     @Override

@@ -7,15 +7,21 @@ import org.junit.Test;
 
 import java.util.Optional;
 
+
+
 import static org.fest.assertions.Assertions.assertThat;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 
 public class MySqlUserRepositoryShould {
 
     private UserRepository userRepository;
+    private UserDao userDao;
 
     @Before
     public void setUp() {
-        userRepository = new MySqlUserRepository();
+        userDao = mock(UserDao.class);
+        userRepository = new MySqlUserRepository(userDao);
     }
 
     @Test
@@ -31,9 +37,6 @@ public class MySqlUserRepositoryShould {
         User expectedUser = new User(userName);
         userRepository.save(expectedUser);
 
-        Optional<User> actualUser = userRepository.find(userName);
-
-        assertThat(actualUser.isPresent()).isTrue();
-        assertThat(actualUser.get()).isSameAs(expectedUser);
+        verify(userDao).saveUser(expectedUser.name());
     }
 }

@@ -11,7 +11,7 @@ public class User {
 
     public User(String name) {
         this.name = name;
-        usersFollowing = new HashSet<>();
+        this.usersFollowing = new HashSet<>();
     }
 
     public User(String name, Set<User> usersFollowing){

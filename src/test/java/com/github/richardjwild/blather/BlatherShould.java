@@ -4,6 +4,7 @@ import com.github.richardjwild.blather.application.Application;
 import com.github.richardjwild.blather.application.ApplicationBuilder;
 import com.github.richardjwild.blather.io.Input;
 import com.github.richardjwild.blather.io.Output;
+import com.github.richardjwild.blather.persistence.InMemoryUserRepository;
 import com.github.richardjwild.blather.time.Clock;
 import org.junit.Before;
 import org.junit.Test;
@@ -38,7 +39,7 @@ public class BlatherShould {
 
     @Before
     public void initialize() {
-        application = ApplicationBuilder.build(input, output, clock);
+        application = ApplicationBuilder.build(input, output, clock, new InMemoryUserRepository());
     }
 
     @Test

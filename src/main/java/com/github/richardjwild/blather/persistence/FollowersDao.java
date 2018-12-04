@@ -2,9 +2,9 @@ package com.github.richardjwild.blather.persistence;
 
 import com.github.richardjwild.blather.user.User;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import javax.swing.*;
+import java.sql.*;
+import java.util.HashSet;
 import java.util.Set;
 
 public class FollowersDao {
@@ -55,6 +55,21 @@ public class FollowersDao {
     }
 
     public Set<String> getFollowees(String follower) {
-        return null;
+        PreparedStatement statement = null;
+        ResultSet results = null;
+        Set<String> followees = new HashSet<>();
+
+        try {
+            statement = connection.prepareStatement(
+                    "SELECT followee FROM followers WHERE follower = ?");
+            statement.setString(1, follower);
+            results = statement.executeQuery();
+            while (results.next())
+                followees.add(results.getString(1));
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return followees;
     }
 }

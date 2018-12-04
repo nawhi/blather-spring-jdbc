@@ -14,11 +14,6 @@ public class User {
         this.usersFollowing = new HashSet<>();
     }
 
-    public User(String name, Set<User> usersFollowing){
-        this.name = name;
-        this.usersFollowing = usersFollowing;
-    }
-
     public String name() {
         return name;
     }
@@ -31,7 +26,9 @@ public class User {
         usersFollowing.add(following);
     }
 
-    public Stream<User> followees(){return usersFollowing.stream();}
+    public Set<User> followees(){
+        return new HashSet<>(usersFollowing);
+    }
 
     @Override
     public boolean equals(Object o) {

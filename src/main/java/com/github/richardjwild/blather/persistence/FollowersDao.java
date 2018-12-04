@@ -5,7 +5,7 @@ import com.github.richardjwild.blather.user.User;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.util.stream.Stream;
+import java.util.Set;
 
 public class FollowersDao {
     private Connection connection;
@@ -15,7 +15,7 @@ public class FollowersDao {
         this.connection = connection;
     }
 
-    public void saveFollowees(String follower, Stream<User> followees)  {
+    public void saveFollowees(String follower, Set<User> followees)  {
         try {
             connection.setAutoCommit(false);
             deleteFollowees(follower);

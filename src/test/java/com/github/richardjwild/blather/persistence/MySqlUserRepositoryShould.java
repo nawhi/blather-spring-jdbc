@@ -39,7 +39,7 @@ public class MySqlUserRepositoryShould {
         userRepository.save(expectedUser);
 
         verify(userDao).saveUser(expectedUser.name());
-     //   verify(followersDao).saveFollowees(expectedUser.name(),expectedUser.followees());
+        verify(followersDao).saveFollowees(expectedUser.name(),expectedUser.followees());
     }
 
     @Test

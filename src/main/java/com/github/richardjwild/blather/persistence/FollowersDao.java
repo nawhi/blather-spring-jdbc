@@ -54,4 +54,7 @@ public class FollowersDao {
         statement.execute();
     }
 
+    public Set<String> getFollowees(String follower) {
+        return null;
+    }
 }

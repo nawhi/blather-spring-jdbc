@@ -14,6 +14,11 @@ public class User {
         this.usersFollowing = new HashSet<>();
     }
 
+    public User(String name, Set<User> usersFollowing) {
+        this.name = name;
+        this.usersFollowing = usersFollowing;
+    }
+
     public String name() {
         return name;
     }

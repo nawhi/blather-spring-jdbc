@@ -46,11 +46,12 @@ public class MySqlUserRepositoryShould {
     public void retrieve_user_when_it_exists() {
         String userName = "will_be_found";
         User expectedUser = new User(userName);
-        when(userDao.findUser(userName)).thenReturn(expectedUser);
+        when(userDao.findUser(userName)).thenReturn(userName);
 
         userRepository.find(expectedUser.name());
 
         verify(userDao).findUser(expectedUser.name());
+        verify(followersDao).getFollowees(expectedUser.name());
     }
 
 

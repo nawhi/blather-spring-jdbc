@@ -22,14 +22,14 @@ public class UserDao {
         }
     }
 
-    public User findUser(String name) {
+    public String findUser(String name) {
         PreparedStatement statement = null;
         ResultSet results = null;
         try {
             statement = connection.prepareStatement("SELECT * FROM users WHERE name = ?");
             statement.setString(1, name);
             results = statement.executeQuery();
-            if(results.next()) return new User(results.getString(1));
+            if(results.next()) return results.getString(1);
         } catch (SQLException e) {
             System.err.println("Statement failed: "+ e.getMessage());
         }

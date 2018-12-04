@@ -3,7 +3,10 @@ package com.github.richardjwild.blather.persistence;
 import com.github.richardjwild.blather.user.User;
 import com.github.richardjwild.blather.user.UserRepository;
 
+import javax.swing.text.html.Option;
 import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 public class MySqlUserRepository implements UserRepository {
     private final UserDao userDao;
@@ -16,7 +19,17 @@ public class MySqlUserRepository implements UserRepository {
 
     @Override
     public Optional<User> find(String name) {
-        return Optional.ofNullable(userDao.findUser(name));
+        String foundName = userDao.findUser(name);
+        if (foundName == null)
+            return Optional.empty();
+
+        Set<String> usernamesFollowing = followersDao.getFollowees(name);
+        Set<User> usersFollowing = usernamesFollowing
+                    .stream()
+                    .map((n) -> new User(n))
+                    .collect(Collectors.toSet());
+        return Optional.of(new User(foundName, usersFollowing));
+
     }
 
     @Override

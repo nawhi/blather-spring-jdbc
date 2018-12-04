@@ -20,7 +20,6 @@ public class MySqlMessageRepository implements MessageRepository {
 
     @Override
     public Stream<Message> allMessagesPostedTo(User recipient) {
-        var messages = messageDao.getMessagesFor(recipient.name());
-        return Stream.empty();
+        return messageDao.getMessagesFor(recipient.name()).stream().map(Message::from);
     }
 }

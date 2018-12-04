@@ -6,39 +6,47 @@ import com.github.richardjwild.blather.user.User;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.sql.Timestamp;
+import java.time.Instant;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
+import static java.util.Arrays.asList;
 import static junit.framework.TestCase.assertTrue;
+import static org.gradle.internal.impldep.org.testng.AssertJUnit.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 public class MySqlMessageRepositoryShould {
 
     private MessageDao messageDao;
     private MessageRepository repository;
+    private final User user = new User("user1");
 
     @Before
     public void setUp() {
         messageDao = mock(MessageDao.class);
         repository = new MySqlMessageRepository(messageDao);
-
     }
 
     @Test
     public void return_empty_collection_when_no_messages_posted_to_recipient() {
-        List<Message> actualMessages = repository.allMessagesPostedTo(new User("user1"))
-                                                 .collect(Collectors.toList());
+        List<Message> actualMessages = repository.allMessagesPostedTo(user)
+                .collect(Collectors.toList());
         assertTrue(actualMessages.isEmpty());
     }
 
     @Test
     public void ask_dao_to_retrieve_messages() {
-        String userName = "user1";
-        User user = new User(userName);
+        MessageDto expectedMessageDto = new MessageDto(user.name(), "Hello world", Timestamp.from(Instant.EPOCH));
+        Message expectedMessage = Message.from(expectedMessageDto);
+        when(messageDao.getMessagesFor(user.name())).thenReturn(asList(expectedMessageDto));
 
-        repository.allMessagesPostedTo(user);
+        Stream<Message> messages = repository.allMessagesPostedTo(user);
 
-        verify(messageDao).getMessagesFor(userName);
+        verify(messageDao).getMessagesFor(user.name());
+        assertEquals(messages.findFirst().get(), expectedMessage);
     }
 }

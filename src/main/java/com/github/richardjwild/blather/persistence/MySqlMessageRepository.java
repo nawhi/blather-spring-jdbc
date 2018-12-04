@@ -15,7 +15,7 @@ public class MySqlMessageRepository implements MessageRepository {
 
     @Override
     public void postMessage(User recipient, Message message) {
-
+        messageDao.postMessage(message.toDto());
     }
 
     @Override

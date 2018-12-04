@@ -1,5 +1,6 @@
 package com.github.richardjwild.blather.message;
 
+import com.github.richardjwild.blather.persistence.MessageDto;
 import com.github.richardjwild.blather.user.User;
 import com.github.richardjwild.blather.time.TimestampFormatter;
 import org.junit.Before;
@@ -8,9 +9,11 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
+import java.sql.Timestamp;
 import java.time.Instant;
 
 import static org.fest.assertions.Assertions.assertThat;
+import static org.gradle.internal.impldep.org.testng.AssertJUnit.assertEquals;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -63,5 +66,15 @@ public class MessageShould {
         Message simultaneous = new Message(RECIPIENT, "message text", TIMESTAMP);
 
         assertThat(message.compareTo(simultaneous)).isEqualTo(0);
+    }
+
+    @Test
+    public void create_a_message_from_a_MessageDto() {
+        Message expectedMessage = new Message(new User("testuser"), "Hello world!", Instant.EPOCH);
+
+        MessageDto messageDto = new MessageDto("testuser", "Hello world!", Timestamp.from(Instant.EPOCH));
+        Message actualMessage = Message.from(messageDto);
+
+        assertEquals(expectedMessage, actualMessage);
     }
 }

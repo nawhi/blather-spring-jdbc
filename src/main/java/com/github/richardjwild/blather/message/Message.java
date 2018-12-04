@@ -1,5 +1,6 @@
 package com.github.richardjwild.blather.message;
 
+import com.github.richardjwild.blather.persistence.MessageDto;
 import com.github.richardjwild.blather.user.User;
 import com.github.richardjwild.blather.time.TimestampFormatter;
 
@@ -19,6 +20,14 @@ public class Message implements Comparable<Message> {
         this.recipient = recipient;
         this.text = text;
         this.timestamp = timestamp;
+    }
+
+    public static Message from(MessageDto messageDto) {
+        String recipientName = messageDto.getRecipientName();
+        String text = messageDto.getText();
+        Instant timestamp = messageDto.getTimestamp().toInstant();
+
+        return new Message(new User(recipientName), text, timestamp);
     }
 
     public String formatRead(TimestampFormatter timestampFormatter) {

@@ -8,6 +8,7 @@ import org.junit.Test;
 
 import java.sql.Timestamp;
 import java.time.Instant;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -33,9 +34,11 @@ public class MySqlMessageRepositoryShould {
 
     @Test
     public void return_empty_collection_when_no_messages_posted_to_recipient() {
-        List<Message> actualMessages = repository.allMessagesPostedTo(user)
-                .collect(Collectors.toList());
-        assertTrue(actualMessages.isEmpty());
+        when(messageDao.getMessagesFor(user.name())).thenReturn(Collections.emptyList());
+
+        Stream<Message> actualMessages = repository.allMessagesPostedTo(user);
+
+        assertEquals(0, actualMessages.count());
     }
 
     @Test

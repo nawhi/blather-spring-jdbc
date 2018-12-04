@@ -47,16 +47,4 @@ public class MessageDao {
             e.printStackTrace();
         }
     }
-
-    public static void main(String[] args) {
-        try (Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/blather?user=root&password=password")) {
-            MessageDao messageDao = new MessageDao(connection);
-            messageDao.postMessage(new MessageDto("testuser", "Isn't it nice weather?", Timestamp.from(Instant.ofEpochSecond(8000))));
-            List<MessageDto> messages = messageDao.getMessagesFor("testuser");
-            messages.forEach(System.out::println);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
 }

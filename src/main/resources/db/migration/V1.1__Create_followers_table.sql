@@ -1,6 +1,6 @@
-create table followers (
-     follower varchar(100) not null,
-     followee varchar(100) not null,
+CREATE TABLE followers (
+     follower VARCHAR(100) NOT NULL,
+     followee VARCHAR(100) NOT NULL,
       PRIMARY KEY (follower,followee),
       FOREIGN KEY (follower) REFERENCES users(name),
       FOREIGN KEY (followee) REFERENCES users(name)

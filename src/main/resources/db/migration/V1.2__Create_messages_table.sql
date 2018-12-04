@@ -1,0 +1,8 @@
+CREATE TABLE messages(
+    id INT NOT NULL AUTO_INCREMENT,
+    recipient VARCHAR(100) NOT NULL,
+    text VARCHAR(280) NOT NULL,
+    post_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (id),
+    FOREIGN KEY (recipient) REFERENCES users(name)
+);

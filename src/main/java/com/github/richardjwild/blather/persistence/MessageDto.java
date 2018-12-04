@@ -41,4 +41,13 @@ public class MessageDto {
     public int hashCode() {
         return Objects.hash(recipientName, text, timestamp);
     }
+
+    @Override
+    public String toString() {
+        return "MessageDto{" +
+                "recipientName='" + recipientName + '\'' +
+                ", text='" + text + '\'' +
+                ", timestamp=" + timestamp +
+                '}';
+    }
 }

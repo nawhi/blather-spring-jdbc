@@ -1,5 +1,5 @@
-create table users (
-    name varchar(100) not null
+CREATE TABLE users (
+    name VARCHAR(100) NOT NULL
 );
 
 ALTER TABLE users ADD PRIMARY KEY (name);

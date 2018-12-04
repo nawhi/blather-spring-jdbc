@@ -4,9 +4,7 @@ import com.github.richardjwild.blather.application.Application;
 import com.github.richardjwild.blather.application.ApplicationBuilder;
 import com.github.richardjwild.blather.io.ConsoleInput;
 import com.github.richardjwild.blather.io.ConsoleOutput;
-import com.github.richardjwild.blather.persistence.FollowersDao;
-import com.github.richardjwild.blather.persistence.MySqlUserRepository;
-import com.github.richardjwild.blather.persistence.UserDao;
+import com.github.richardjwild.blather.persistence.*;
 import com.github.richardjwild.blather.time.SystemClock;
 
 import java.sql.Connection;
@@ -20,7 +18,7 @@ public class Blather {
         Application application = ApplicationBuilder.build(new ConsoleInput(),
                 new ConsoleOutput(),
                 new SystemClock(),
-                new MySqlUserRepository(new UserDao(connection), new FollowersDao(connection)));
+                new MySqlUserRepository(new UserDao(connection), new FollowersDao(connection)), new MySqlMessageRepository(new MessageDao(connection)));
         application.run();
         closeConnection(connection);
     }

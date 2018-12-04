@@ -18,7 +18,8 @@ public class UserDao {
             statement.setString(1, name);
             statement.execute();
         } catch (SQLException e) {
-            System.err.println("Statement failed: "+ e.getMessage());
+            System.err.println("Saveuser failed: "+ e.getMessage());
+            e.printStackTrace();
         }
     }
 
@@ -31,7 +32,8 @@ public class UserDao {
             results = statement.executeQuery();
             if(results.next()) return results.getString(1);
         } catch (SQLException e) {
-            System.err.println("Statement failed: "+ e.getMessage());
+            System.err.println("Finduser failed: "+ e.getMessage());
+            e.printStackTrace();
         }
         return null;
     }

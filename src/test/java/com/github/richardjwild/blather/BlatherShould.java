@@ -39,7 +39,7 @@ public class BlatherShould {
 
     @Before
     public void initialize() {
-        application = ApplicationBuilder.build(input, output, clock, new InMemoryUserRepository());
+        application = ApplicationBuilder.build(input, output, clock, new InMemoryUserRepository(), _messageRepository);
     }
 
     @Test

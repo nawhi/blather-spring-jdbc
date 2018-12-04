@@ -6,17 +6,16 @@ import com.github.richardjwild.blather.io.Output;
 import com.github.richardjwild.blather.message.MessageRepository;
 import com.github.richardjwild.blather.parsing.CommandReader;
 import com.github.richardjwild.blather.parsing.InputParser;
-import com.github.richardjwild.blather.persistence.InMemoryMessageRepository;
 import com.github.richardjwild.blather.time.Clock;
 import com.github.richardjwild.blather.time.TimestampFormatter;
 import com.github.richardjwild.blather.user.UserRepository;
 
 public class ApplicationBuilder {
 
-    public static Application build(Input input, Output output, Clock clock, UserRepository _userRepository) {
+    public static Application build(Input input, Output output, Clock clock, UserRepository _userRepository, MessageRepository _messageRepository) {
 
         UserRepository userRepository = _userRepository;
-        MessageRepository messageRepository = new InMemoryMessageRepository();
+        MessageRepository messageRepository = _messageRepository;
 
         InputParser inputParser = new InputParser();
         Controller controller = new Controller();

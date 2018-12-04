@@ -34,7 +34,9 @@ public class MySqlUserRepository implements UserRepository {
 
     @Override
     public void save(User user) {
-        userDao.saveUser(user.name());
+        if(userDao.findUser(user.name()) == null){
+            userDao.saveUser(user.name());
+        }
         followersDao.saveFollowees(user.name(), user.followees());
     }
 }

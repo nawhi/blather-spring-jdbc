@@ -3,23 +3,26 @@ package com.github.richardjwild.blather.persistence;
 import com.github.richardjwild.blather.user.User;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.stream.Stream;
 
 public class FollowersDao {
-    public void saveFollowees(String follower, Stream<User> followees)  {
-        Connection connection = null;
-        try {
-            connection = createConnection();
-            connection.setAutoCommit(false);
-            deleteFollowees(follower, connection);
+    private Connection connection;
 
-            Connection finalConn = connection;
+    public FollowersDao(Connection connection) {
+
+        this.connection = connection;
+    }
+
+    public void saveFollowees(String follower, Stream<User> followees)  {
+        try {
+            connection.setAutoCommit(false);
+            deleteFollowees(follower);
+
             followees.forEach(followee -> {
                 try {
-                    addFollowees(follower, followee.name(), finalConn);
+                    addFollowees(follower, followee.name());
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
@@ -30,21 +33,20 @@ public class FollowersDao {
         } finally {
             try {
                 connection.setAutoCommit(true);
-                closeConnection(connection);
             } catch (SQLException e) {
                 e.printStackTrace();
             }
         }
     }
 
-    private void deleteFollowees(String follower, Connection connection) throws SQLException {
+    private void deleteFollowees(String follower) throws SQLException {
         PreparedStatement statement;
         statement = connection.prepareStatement("DELETE FROM followers WHERE follower = ?");
         statement.setString(1, follower);
         statement.execute();
     }
 
-    private void addFollowees(String follower, String followee, Connection connection) throws SQLException {
+    private void addFollowees(String follower, String followee) throws SQLException {
         PreparedStatement statement;
         statement = connection.prepareStatement("INSERT INTO followers VALUES (?, ?)");
         statement.setString(1, follower);
@@ -52,23 +54,4 @@ public class FollowersDao {
         statement.execute();
     }
 
-    private Connection createConnection() throws SQLException {
-        return DriverManager.getConnection("jdbc:mysql://localhost:3306/blather" +
-                "?user=root&password=password");
-    }
-
-    private void closeConnection(Connection connection) {
-        try {
-            connection.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public static void main(String[] args) throws SQLException {
-        FollowersDao followersDao = new FollowersDao();
-        User sarah = new User("sarah");
-
-        followersDao.saveFollowees("Alice", Stream.of(sarah));
-    }
 }

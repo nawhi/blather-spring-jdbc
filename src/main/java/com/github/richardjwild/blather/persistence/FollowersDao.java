@@ -39,7 +39,7 @@ public class FollowersDao {
 
     private void deleteFollowees(String follower, Connection connection) throws SQLException {
         PreparedStatement statement;
-        statement = connection.prepareStatement("DELETE FROM FOLLOWERS WHERE follower = ?");
+        statement = connection.prepareStatement("DELETE FROM followers WHERE follower = ?");
         statement.setString(1, follower);
         statement.execute();
     }

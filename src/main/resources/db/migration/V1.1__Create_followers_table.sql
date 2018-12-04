@@ -1,7 +1,7 @@
-create table FOLLOWERS (
-     FOLLOWER varchar(100) not null,
-     FOLLOWEE varchar(100) not null,
-      PRIMARY KEY (FOLLOWER,FOLLOWEE),
-      FOREIGN KEY (FOLLOWER) REFERENCES USERS(name),
-      FOREIGN KEY (FOLLOWEE) REFERENCES USERS(name)
+create table followers (
+     follower varchar(100) not null,
+     followee varchar(100) not null,
+      PRIMARY KEY (follower,followee),
+      FOREIGN KEY (follower) REFERENCES users(name),
+      FOREIGN KEY (followee) REFERENCES users(name)
 );

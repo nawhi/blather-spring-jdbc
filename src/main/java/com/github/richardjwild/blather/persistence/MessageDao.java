@@ -32,4 +32,7 @@ public class MessageDao {
         }
         return messages;
     }
+
+    public void postMessage(MessageDto messageDto) {
+    }
 }

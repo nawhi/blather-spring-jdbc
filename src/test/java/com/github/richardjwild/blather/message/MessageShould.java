@@ -26,6 +26,8 @@ public class MessageShould {
     private TimestampFormatter timestampFormatter;
 
     private Message message;
+    private final Message expectedMessage = new Message(new User("testuser"), "Hello world!", Instant.EPOCH);
+    private final MessageDto messageDto = new MessageDto("testuser", "Hello world!", Timestamp.from(Instant.EPOCH));
 
     @Before
     public void initialize() {
@@ -70,11 +72,15 @@ public class MessageShould {
 
     @Test
     public void create_a_message_from_a_MessageDto() {
-        Message expectedMessage = new Message(new User("testuser"), "Hello world!", Instant.EPOCH);
-
-        MessageDto messageDto = new MessageDto("testuser", "Hello world!", Timestamp.from(Instant.EPOCH));
         Message actualMessage = Message.from(messageDto);
 
         assertEquals(expectedMessage, actualMessage);
+    }
+
+    @Test
+    public void create_a_MessageDto_from_a_Message() {
+        MessageDto actualDto = expectedMessage.toDto();
+
+        assertEquals(actualDto, messageDto);
     }
 }

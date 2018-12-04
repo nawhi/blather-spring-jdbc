@@ -4,6 +4,7 @@ import com.github.richardjwild.blather.persistence.MessageDto;
 import com.github.richardjwild.blather.user.User;
 import com.github.richardjwild.blather.time.TimestampFormatter;
 
+import java.sql.Timestamp;
 import java.time.Instant;
 import java.util.StringJoiner;
 
@@ -29,6 +30,7 @@ public class Message implements Comparable<Message> {
 
         return new Message(new User(recipientName), text, timestamp);
     }
+
 
     public String formatRead(TimestampFormatter timestampFormatter) {
         return new StringJoiner(" ")
@@ -57,5 +59,9 @@ public class Message implements Comparable<Message> {
     @Override
     public int hashCode() {
         return reflectionHashCode(this);
+    }
+
+    public MessageDto toDto() {
+        return new MessageDto(recipient.name(), text, Timestamp.from(timestamp));
     }
 }

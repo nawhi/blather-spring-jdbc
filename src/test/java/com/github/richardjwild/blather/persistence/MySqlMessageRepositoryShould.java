@@ -52,4 +52,14 @@ public class MySqlMessageRepositoryShould {
         verify(messageDao).getMessagesFor(user.name());
         assertEquals(messages.findFirst().get(), expectedMessage);
     }
+
+    @Test
+    public void tell_dao_to_post_messages() {
+        Message message = new Message(user, "Hello world", Instant.EPOCH);
+        MessageDto messageDto = message.toDto();
+
+        repository.postMessage(user, message);
+
+        verify(messageDao).postMessage(messageDto);
+    }
 }

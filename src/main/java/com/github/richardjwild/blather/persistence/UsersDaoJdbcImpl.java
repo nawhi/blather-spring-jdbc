@@ -4,6 +4,8 @@ import com.mysql.jdbc.jdbc2.optional.MysqlDataSource;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 
+import javax.sql.DataSource;
+
 public class UsersDaoJdbcImpl implements UserDao {
 
     private JdbcTemplate jdbcTemplate;
@@ -12,15 +14,13 @@ public class UsersDaoJdbcImpl implements UserDao {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-    public static void main(String[] args) {
+    public static DataSource getDataSource() { // DEBUG
         var dataSource = new MysqlDataSource();
         dataSource.setUser("root");
         dataSource.setPassword("password");
         dataSource.setDatabaseName("blather");
         dataSource.setPort(3306);
-        JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
-        UsersDaoJdbcImpl usersDaoJdbc = new UsersDaoJdbcImpl(jdbcTemplate);
-        System.out.println(usersDaoJdbc.findUser("nick"));
+        return dataSource;
     }
 
     @Override

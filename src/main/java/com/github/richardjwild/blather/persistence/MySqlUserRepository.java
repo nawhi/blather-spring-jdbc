@@ -3,7 +3,6 @@ package com.github.richardjwild.blather.persistence;
 import com.github.richardjwild.blather.user.User;
 import com.github.richardjwild.blather.user.UserRepository;
 
-import javax.swing.text.html.Option;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;

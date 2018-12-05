@@ -4,13 +4,14 @@ import com.github.richardjwild.blather.user.User;
 
 import java.sql.*;
 
-public class UserDao {
+public class UserDaoManualImpl implements UserDao {
     private Connection connection;
 
-    public UserDao(Connection connection) {
+    public UserDaoManualImpl(Connection connection) {
         this.connection = connection;
     }
 
+    @Override
     public void saveUser(String name) {
         PreparedStatement statement ;
         try {
@@ -23,6 +24,7 @@ public class UserDao {
         }
     }
 
+    @Override
     public String findUser(String name) {
         PreparedStatement statement = null;
         ResultSet results = null;

@@ -21,7 +21,7 @@ public class Blather {
         Application application = ApplicationBuilder.build(new ConsoleInput(),
                 new ConsoleOutput(),
                 new SystemClock(),
-                new MySqlUserRepository(new UserDaoJdbcImpl(new JdbcTemplate(dataSource)), new FollowersDao(connection)),
+                new MySqlUserRepository(new UserDaoJdbcImpl(new JdbcTemplate(dataSource)), new FollowersDaoManualImpl(connection)),
                 new MySqlMessageRepository(new MessageDao(connection)));
         application.run();
         closeConnection(connection);

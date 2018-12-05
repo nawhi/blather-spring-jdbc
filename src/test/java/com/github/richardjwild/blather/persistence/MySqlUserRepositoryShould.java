@@ -14,12 +14,12 @@ public class MySqlUserRepositoryShould {
 
     private UserRepository userRepository;
     private UserDao userDao;
-    private FollowersDao followersDao;
+    private FollowersDaoManualImpl followersDao;
 
     @Before
     public void setUp() {
         userDao = mock(UserDao.class);
-        followersDao = mock(FollowersDao.class);
+        followersDao = mock(FollowersDaoManualImpl.class);
         userRepository = new MySqlUserRepository(userDao, followersDao);
     }
 

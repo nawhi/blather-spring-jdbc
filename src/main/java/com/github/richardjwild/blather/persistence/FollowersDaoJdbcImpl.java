@@ -2,7 +2,6 @@ package com.github.richardjwild.blather.persistence;
 
 import com.github.richardjwild.blather.user.User;
 
-import java.sql.SQLException;
 import java.util.Set;
 
 public class FollowersDaoJdbcImpl implements FollowersDao {

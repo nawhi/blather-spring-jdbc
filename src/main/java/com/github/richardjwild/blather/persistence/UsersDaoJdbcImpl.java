@@ -1,6 +1,7 @@
 package com.github.richardjwild.blather.persistence;
 
 import com.mysql.jdbc.jdbc2.optional.MysqlDataSource;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 public class UsersDaoJdbcImpl implements UserDao {
@@ -29,10 +30,16 @@ public class UsersDaoJdbcImpl implements UserDao {
 
     @Override
     public String findUser(String name) {
-         return jdbcTemplate.queryForObject(
-                 "SELECT name FROM users WHERE name = ?",
-                 new Object[] { name },
-                 String.class
-         );
+        String userName = null;
+        try {
+            userName = jdbcTemplate.queryForObject(
+                    "SELECT name FROM users WHERE name = ?",
+                    new Object[]{name},
+                    String.class
+            );
+        } catch (EmptyResultDataAccessException ex) {
+
+        }
+        return userName;
     }
 }

@@ -25,7 +25,7 @@ public class UsersDaoJdbcImpl implements UserDao {
 
     @Override
     public void saveUser(String name) {
-
+        jdbcTemplate.update("INSERT INTO users VALUES (?)", new Object[] { name });
     }
 
     @Override

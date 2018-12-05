@@ -39,16 +39,14 @@ public class FollowersDaoManualImpl implements FollowersDao {
         }
     }
 
-    @Override
-    public void deleteFollowees(String follower) throws SQLException {
+    private void deleteFollowees(String follower) throws SQLException {
         PreparedStatement statement;
         statement = connection.prepareStatement("DELETE FROM followers WHERE follower = ?");
         statement.setString(1, follower);
         statement.execute();
     }
 
-    @Override
-    public void addFollowees(String follower, String followee) throws SQLException {
+    private void addFollowees(String follower, String followee) throws SQLException {
         PreparedStatement statement;
         statement = connection.prepareStatement("INSERT INTO followers VALUES (?, ?)");
         statement.setString(1, follower);

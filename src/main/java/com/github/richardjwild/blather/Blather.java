@@ -6,6 +6,7 @@ import com.github.richardjwild.blather.io.ConsoleInput;
 import com.github.richardjwild.blather.io.ConsoleOutput;
 import com.github.richardjwild.blather.persistence.*;
 import com.github.richardjwild.blather.time.SystemClock;
+import com.mysql.jdbc.jdbc2.optional.MysqlDataSource;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -34,9 +35,13 @@ public class Blather {
 
     private static Connection newMySQLConnection() {
         try {
-            return DriverManager.getConnection(
-                    "jdbc:mysql://localhost:3306/blather" +
-                    "?user=root&password=password");
+            var dataSource = new MysqlDataSource();
+            dataSource.setUser("root");
+            dataSource.setPassword("password");
+            dataSource.setDatabaseName("blather");
+            dataSource.setPort(3306);
+            return dataSource.getConnection();
+
         } catch (SQLException e) {
             e.printStackTrace();
             throw new RuntimeException("Cannot begin SQL: " + e.getMessage());

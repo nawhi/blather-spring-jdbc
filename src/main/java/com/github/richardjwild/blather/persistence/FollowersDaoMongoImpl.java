@@ -2,6 +2,7 @@ package com.github.richardjwild.blather.persistence;
 
 import com.github.richardjwild.blather.user.User;
 import com.mongodb.MongoClient;
+import com.mongodb.client.FindIterable;
 import org.bson.BsonString;
 import org.bson.Document;
 
@@ -33,7 +34,8 @@ public class FollowersDaoMongoImpl extends MongoDao implements FollowersDao {
     public Set<String> getFollowees(String follower) {
         Document filter = new Document("user", new BsonString(follower));
         Set<String> results = new HashSet<>();
-        for (Document entry: collection.find(filter)) {
+        FindIterable<Document> documents = collection.find(filter).projection(new Document("follows", 1));
+        for (Document entry: documents) {
             results.add(entry.getString("follows"));
         }
         return results;

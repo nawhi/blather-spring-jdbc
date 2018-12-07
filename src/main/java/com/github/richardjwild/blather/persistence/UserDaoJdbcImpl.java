@@ -14,15 +14,6 @@ public class UserDaoJdbcImpl implements UserDao {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-    public static DataSource getDataSource() { // DEBUG
-        var dataSource = new MysqlDataSource();
-        dataSource.setUser("root");
-        dataSource.setPassword("password");
-        dataSource.setDatabaseName("blather");
-        dataSource.setPort(3306);
-        return dataSource;
-    }
-
     @Override
     public void saveUser(String name) {
         jdbcTemplate.update("INSERT INTO users VALUES (?)", new Object[] { name });

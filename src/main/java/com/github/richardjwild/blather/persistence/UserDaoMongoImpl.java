@@ -1,7 +1,6 @@
 package com.github.richardjwild.blather.persistence;
 
 import com.mongodb.MongoClient;
-import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import org.bson.BsonDocument;

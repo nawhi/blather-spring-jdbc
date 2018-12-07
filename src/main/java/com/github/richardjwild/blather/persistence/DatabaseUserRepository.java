@@ -7,11 +7,11 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-public class MySqlUserRepository implements UserRepository {
+public class DatabaseUserRepository implements UserRepository {
     private final UserDao userDao;
     private final FollowersDao followersDao;
 
-    public MySqlUserRepository(UserDao userDao, FollowersDao followersDao) {
+    public DatabaseUserRepository(UserDao userDao, FollowersDao followersDao) {
         this.userDao = userDao;
         this.followersDao = followersDao;
     }

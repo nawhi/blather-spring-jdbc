@@ -10,7 +10,7 @@ import java.util.Optional;
 import static org.fest.assertions.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 
-public class MySqlUserRepositoryShould {
+public class DatabaseUserRepositoryShould {
 
     private UserRepository userRepository;
     private UserDao userDao;
@@ -20,7 +20,7 @@ public class MySqlUserRepositoryShould {
     public void setUp() {
         userDao = mock(UserDao.class);
         followersDao = mock(FollowersDaoManualImpl.class);
-        userRepository = new MySqlUserRepository(userDao, followersDao);
+        userRepository = new DatabaseUserRepository(userDao, followersDao);
     }
 
     @Test

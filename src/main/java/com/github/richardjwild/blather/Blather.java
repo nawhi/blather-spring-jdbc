@@ -18,7 +18,7 @@ public class Blather {
     public static void main(String[] args) {
         DataSource dataSource = newMySqlDataSource();
         Connection connection = getConnection(dataSource);
-        MySqlUserRepository userRepository = getUserRepository(dataSource, connection);
+        DatabaseUserRepository userRepository = getUserRepository(dataSource, connection);
         MySqlMessageRepository messageRepository = new MySqlMessageRepository(new MessageDao(connection));
         Application application = ApplicationBuilder.build(new ConsoleInput(),
                 new ConsoleOutput(),
@@ -29,12 +29,12 @@ public class Blather {
         closeConnection(connection);
     }
 
-    private static MySqlUserRepository getUserRepository(DataSource dataSource, Connection connection) {
+    private static DatabaseUserRepository getUserRepository(DataSource dataSource, Connection connection) {
         JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
         FollowersDao followersDao = new FollowersDaoJdbcImpl(jdbcTemplate);
         UserDao userDao = new UserDaoJdbcImpl(jdbcTemplate);
 
-        return new MySqlUserRepository(userDao, followersDao);
+        return new DatabaseUserRepository(userDao, followersDao);
     }
 
     private static Connection getConnection(DataSource dataSource) {

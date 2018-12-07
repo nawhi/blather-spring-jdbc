@@ -5,6 +5,7 @@ import com.mongodb.MongoClient;
 import org.bson.BsonString;
 import org.bson.Document;
 
+import java.util.HashSet;
 import java.util.Set;
 
 public class FollowersDaoMongoImpl extends MongoDao implements FollowersDao {
@@ -30,6 +31,11 @@ public class FollowersDaoMongoImpl extends MongoDao implements FollowersDao {
 
     @Override
     public Set<String> getFollowees(String follower) {
-        return null;
+        Document filter = new Document("user", new BsonString(follower));
+        Set<String> results = new HashSet<>();
+        for (Document entry: collection.find(filter)) {
+            results.add(entry.getString("follows"));
+        }
+        return results;
     }
 }

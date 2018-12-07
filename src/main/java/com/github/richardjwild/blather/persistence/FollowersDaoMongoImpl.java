@@ -8,6 +8,7 @@ import org.bson.Document;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.function.Consumer;
 
 public class FollowersDaoMongoImpl extends MongoDao implements FollowersDao {
 
@@ -34,10 +35,10 @@ public class FollowersDaoMongoImpl extends MongoDao implements FollowersDao {
     public Set<String> getFollowees(String follower) {
         Document filter = new Document("user", new BsonString(follower));
         Set<String> results = new HashSet<>();
-        FindIterable<Document> documents = collection.find(filter).projection(new Document("follows", 1));
-        for (Document entry: documents) {
-            results.add(entry.getString("follows"));
-        }
+        collection.find(filter)
+                .projection(new Document("follows", 1))
+                .forEach((Consumer<? super Document>) document ->
+                        results.add(document.getString("follows")));
         return results;
     }
 }

@@ -16,7 +16,8 @@ public class FollowersDaoMongoImpl extends MongoDao implements FollowersDao {
     @Override
     public void saveFollowees(String follower, Set<User> followees) {
         followees.stream().map(user -> user.name()).forEach(followee -> {
-            Document entry = new Document(follower, new BsonString(followee));
+            Document entry = new Document("user", new BsonString(follower))
+                                .append("follows", new BsonString(followee));
             if (!alreadyExists(entry)) {
                 collection.insertOne(entry);
             }

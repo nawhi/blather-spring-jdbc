@@ -15,7 +15,7 @@ public class UserDaoMongoImpl implements UserDao {
     public UserDaoMongoImpl(MongoClient client) {
         this.client = client;
         database = client.getDatabase("blather");
-        collection = database.getCollection("collection");
+        collection = database.getCollection("users");
     }
 
     @Override
@@ -27,6 +27,9 @@ public class UserDaoMongoImpl implements UserDao {
     public String findUser(String name) {
         BsonDocument filter = new BsonDocument("name", new BsonString(name));
         Document firstResult = collection.find(filter).first();
-        return firstResult.getString("name");
+        if (firstResult != null) {
+            return firstResult.getString("name");
+        }
+        return null;
     }
 }
